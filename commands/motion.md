@@ -10,7 +10,7 @@ Read before starting: DESIGN.md `motion:` block, [reference/motion/principles.md
    - What purpose: feedback, state change, spatial continuity, or attention.
    - How does it express the motion personality? A default (generic fade, generic spring press, generic sliding highlight) needs a reason it fits *this* world, or a replacement that does.
    - Interruptible? Anything the user can re-trigger mid-flight uses springs or transitions that retarget, never keyframes that restart.
-3. **Signature.** Build or refine the direction's signature interaction on this surface if it belongs here. It must be the most memorable moment of the surface.
+3. **Signature.** Build or refine the direction's signature interaction on this surface if it belongs here. It must be the most memorable moment of the surface. [reference/components/effects.md](../reference/components/effects.md) lists expressive patterns and app micro-interactions to start from.
 4. **Implement**: CSS transitions first, `motion` for component and layout animation, GSAP only for timelines. Every animation respects `prefers-reduced-motion` with a gentler equivalent (fade or instant), never by removing feedback.
 5. **Demo.** For changes to an existing app, show a demo page or a short list of "click X, then Y" steps so the user can feel each change, and adjust on their notes.
 

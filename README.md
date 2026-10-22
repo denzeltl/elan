@@ -25,4 +25,4 @@ agents/         elan-reviewer (copy to ~/.claude/agents to enable)
 
 ## Status
 
-Skeleton. Files marked `TODO(port)` still need their full content ported from the sources in [CREDITS.md](CREDITS.md).
+All references ported from the sources in [CREDITS.md](CREDITS.md). Not yet run end to end on a real project.
