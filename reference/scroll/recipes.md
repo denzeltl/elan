@@ -4,9 +4,27 @@ Working starting points for each scene type in [scenes.md](scenes.md), for Next.
 
 Pick the lightest layer that works: CSS scroll-driven animation → `motion` `useScroll` → GSAP ScrollTrigger.
 
-## Setup: Lenis + ScrollTrigger
+## Setup: Lenis
 
-Once, in a client provider at the root layout:
+Default on `immersive` site pages. Install `lenis` and check the installed version's README for option names before writing code.
+
+**Without GSAP** (pages built on `motion` `useScroll`): mount once around the marketing page, not the app routes.
+
+```tsx
+"use client";
+import { ReactLenis } from "lenis/react";
+import { useReducedMotion } from "motion/react";
+
+export function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const reduce = useReducedMotion();
+  if (reduce) return <>{children}</>;
+  return <ReactLenis root options={{ lerp: 0.1, autoRaf: true }}>{children}</ReactLenis>;
+}
+```
+
+Lenis drives the window's own scroll position, so `useScroll`, `position: sticky` and `scrollIntoView` keep working. In-page anchor jumps should go through `useLenis()?.scrollTo(target)` so they ease the same way. Touch scrolling stays native by default; leave it that way.
+
+**With GSAP ScrollTrigger**: once, in a client provider at the root layout:
 
 ```tsx
 "use client";

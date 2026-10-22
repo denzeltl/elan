@@ -8,7 +8,7 @@ Primitives come from shadcn/ui (Radix or Base UI) for accessibility: dialogs, me
 
 | Block | Must have | Often worth adding |
 |---|---|---|
-| **Navbar** (`navbar-component`) | Logo, 3–6 links, one primary CTA, mobile menu with focus trap and `aria-expanded`, current-page state | Hide on scroll down / return on scroll up; solid on scroll; dropdown for products |
+| **Navbar** (`navbar-component`) | Logo that links home (on a one-page site: scrolls to top), 3–6 links, one primary CTA, mobile menu with focus trap and `aria-expanded`, current-page state | A scroll behaviour chosen for the direction: always sticky, solid or compact once past the hero, or hide on scroll down / return on scroll up (if it hides, it shows whenever the footer is in view); dropdown for products |
 | **Hero** (`hero-section`) | One-sentence promise, a supporting line, primary + secondary CTA, a visual that *shows* the product | Social proof strip, a live demo or toy, "no credit card" style friction remover |
 | **Logo cloud / social proof** | Recognisable logos at even optical size, monochrome | Marquee with pause on hover; a single metric |
 | **Features** (`features-section`) | 3–6 features, each a benefit headline + one line + visual; scannable | Tabbed or scroll-linked feature demos |
@@ -23,7 +23,7 @@ Primitives come from shadcn/ui (Radix or Base UI) for accessibility: dialogs, me
 | **Blog / Portfolio / Gallery** | Cards with image, title, date or tag, excerpt; filter by tag | Featured first item larger |
 | **Contact** | Form (name, email, message), response time, alternative channels | Map, office hours |
 | **Waitlist** | Email field, position or count, what happens next | Referral link to move up |
-| **Footer** (`footer-component`, `mega-footer`) | Nav groups, legal, social, newsletter, language/theme | Status link, a giant wordmark |
+| **Footer** (`footer-component`, `mega-footer`) | Nav groups, legal, social, newsletter, language/theme; a "Back to top" link on long pages | Status link, a giant wordmark |
 | **Cookie consent** | Accept / reject equally prominent, settings link | Per-category toggles |
 | **Error page** | What happened, a way home, search | A small on-brand illustration |
 

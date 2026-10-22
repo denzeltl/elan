@@ -16,7 +16,7 @@ The minimum every UI edit meets. Read before any change.
 - Every colour comes from DESIGN.md tokens.
 
 ## Interaction
-- Every interactive element: hover (pointer devices only, via `@media (hover: hover)`), press, `:focus-visible`, disabled. Touch targets ≥ 44px.
+- Every interactive element: hover (pointer devices only, via `@media (hover: hover)`), press, `:focus-visible`, disabled, each with the motion its row in the interaction floor ([commands/motion.md](../commands/motion.md#interaction-floor)) asks for. Touch targets ≥ 44px.
 - Buttons say what they do. Errors say what happened and what to do.
 
 ## Motion

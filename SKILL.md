@@ -14,7 +14,8 @@ One design system for sites and apps: a committed art direction, motion with a s
    - **site**: landing pages, marketing, portfolios. Leads with art direction and scroll scenes. Default motion intensity `immersive`. Read [reference/site-mode.md](reference/site-mode.md).
    - **app**: product screens, dashboards, games, tools. Leads with micro-interactions, state changes, clarity. Default intensity `crisp`. Read [reference/app-mode.md](reference/app-mode.md).
 3. Read [reference/craft-floor.md](reference/craft-floor.md) before any UI edit.
-4. Route to the command.
+4. **Scratch space.** Every working file elan makes goes under `.elan/` at the project root: briefs, decision pages, screenshots, fixtures, notes. Make sure `.elan/` is listed in the project's `.gitignore` (add it if not). Anything that has to sit elsewhere to work (a seed page in `public/`, a launch config entry for a prototype server) is written down in `.elan/cleanup.md` the moment it's created.
+5. Route to the command.
 
 ## Commands
 
@@ -40,7 +41,7 @@ Layout, component, visual-style and brand changes are shown as a **prototype** f
 - **Motion changes** → a small demo page where each motion can be triggered and replayed.
 - **Audit fixes** that change no visual design (contrast, focus rings, aria, overflow) skip the gate and show the diff.
 
-The gate is passed when the user has chosen (or asked for a mix); a picked variant is then built properly, never shipped as prototype code. Remove pickers and prototype files once the choice lands.
+The gate is passed when the user has chosen (or asked for a mix); a picked variant is then built properly, never shipped as prototype code. Once the choice lands, delete the decision page and any in-app picker code from the source.
 
 ## Signature over defaults
 
@@ -52,6 +53,10 @@ A command is done when its file's completion criteria hold and, for any UI chang
 
 - `node ~/.claude/skills/elan/scripts/shoot.mjs <url>` (add `--stress` for long strings) screenshots pass at 1440, 768 and 390px and with reduced motion: no text overflowing its container, no horizontal scroll at 390px, nothing hidden behind motion.
 - Every section answers "what is this section telling the user?" in its heading and first line.
+- Every control meets the interaction floor in [commands/motion.md](commands/motion.md#interaction-floor) (both modes, landing pages included), and the user has tried the motion demo.
+- Site mode, `immersive`: every non-scene section reveals on entry, and Lenis is on unless the user declined it.
 - The build passes.
 
-Report what changed, the direction it serves, and anything left undone.
+Then **clean up** before reporting: delete everything under `.elan/` and every path listed in `.elan/cleanup.md` (seed pages, fixtures in `public/`, prototype servers in launch configs), and stop any servers elan started. The only durable artifacts are `DESIGN.md`, the source changes, and the CLAUDE.md line if the user opted in. Keep a file only when the user asks for it.
+
+Report what changed, the direction it serves, what was cleaned up, and anything left undone.

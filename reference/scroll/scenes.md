@@ -26,7 +26,7 @@ Each scene answers "what is the visitor's hand doing here?". Pick per beat, neve
 - At most **2 scrub/sequence** scenes: the third is no longer a surprise, and they are the heaviest thing on the page.
 - One kinetic headline per scene at most; every heading assembling the same way is the templated rhythm to avoid.
 - The peak beat gets the signature; nothing before it outdoes it.
-- Flow sections between pinned scenes: the contrast is what makes the pinned ones land.
+- Flow sections between pinned scenes: the contrast is what makes the pinned ones land. On `immersive` pages **every** section that is not a scene gets a flow reveal (the hero excepted: it greets on load); none just sits there.
 - One thing is the reason each scene exists. If you can't say its moment in one sentence, it doesn't have one.
 - No dead scroll: every viewport of scroll changes something visible.
 
@@ -57,7 +57,7 @@ Each scene answers "what is the visitor's hand doing here?". Pick per beat, neve
 
 **Counters are truth claims.** Only real, verified numbers; a fictional or pre-launch product has none. Ease-out hard over 1.2–1.8s, fire once at half visibility, reduced motion writes the final value.
 
-**Flow reveals.** Opacity from 0 plus a ~14px rise over ~620ms ease-out, children staggered 30–80ms in reading order, triggered slightly inside the viewport (~−12% bottom margin), once. No rise reads as a glitch; over 24px reads as a slide.
+**Flow reveals.** Opacity from 0 plus a ~14px rise over ~620ms ease-out, children staggered 30–80ms in reading order, triggered slightly inside the viewport (~−12% bottom margin), **once**. No rise reads as a glitch; over 24px reads as a slide. Never replay a flow reveal when a section re-enters (scrolling back down to the form would make the reader wait for text they've already read, and replaying reveals is a templated-page tell). Replay belongs to scroll-linked scenes (scrub, pin, reveal wipes), which follow the scrollbar both ways by nature.
 
 **Pointer effects** interpolate toward the pointer (no direct tracking), gated to `(hover: hover) and (pointer: fine)`, off under reduced motion. Tilt 5–9°; magnet 0.2–0.35 on the primary CTA only. Magnet, parallax and reveal-rise all write `transform`: never two on one element; drive an inner wrapper instead.
 
@@ -65,4 +65,4 @@ Each scene answers "what is the visitor's hand doing here?". Pick per beat, neve
 
 ## Fingerprints
 
-Pages built by the same hand converge. Before building a scroll page, read `FINGERPRINTS.md` at the elan root and compare the plan with every row on six dimensions: (1) page grammar, (2) nav treatment, (3) hero scene, (4) scene sequence (types, count, total length), (5) close pattern, (6) signature move. **The new page must differ from every row on at least 4 of 6.** The signature is unique by definition, so that means 3 of the other 5. If the plan fails, change the plan, never the log. After shipping, append a row.
+Pages built by the same hand converge. Before building a scroll page, read the personal log `~/.claude/elan/fingerprints.md` (format and rules in `FINGERPRINTS.md` at the elan root; no log yet means nothing to compare) and compare the plan with every row on six dimensions: (1) page grammar, (2) nav treatment, (3) hero scene, (4) scene sequence (types, count, total length), (5) close pattern, (6) signature move. **The new page must differ from every row on at least 4 of 6.** The signature is unique by definition, so that means 3 of the other 5. If the plan fails, change the plan, never the log. Append a row only after the user confirms the page landed, and only to the personal log.

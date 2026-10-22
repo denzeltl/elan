@@ -9,8 +9,9 @@ Runs when DESIGN.md is missing.
 1. **Read the product.** README, routes, existing components, current styles and fonts, package.json (framework, Tailwind, motion libraries). Note what the product is, who uses it, and which surfaces are site vs app mode.
 2. **Existing UI worth keeping?** If the codebase already has a visual identity the user likes, extract it into DESIGN.md (tokens from the CSS/Tailwind config, components as built) instead of inventing one. Ask once if unclear.
 3. **Otherwise, choose a direction** with the decision page (step 2 of the build below).
-4. **Write DESIGN.md** from [templates/DESIGN.md](../templates/DESIGN.md). Every token filled, the `motion:` block included, the signature interaction named.
-5. **Offer the opt-in line** for the project's CLAUDE.md (create the file if absent), and add it only on a yes:
+4. **Ignore scratch.** Add `.elan/` to the project's `.gitignore`.
+5. **Write DESIGN.md** from [templates/DESIGN.md](../templates/DESIGN.md). Every token filled, the `motion:` block included, the signature interaction named.
+6. **Offer the opt-in line** for the project's CLAUDE.md (create the file if absent), and add it only on a yes:
    `All UI, design, and motion work in this project uses the elan skill; DESIGN.md is its source of truth.`
 
 Setup is done when DESIGN.md exists with no placeholder left and the user has answered the CLAUDE.md offer.
