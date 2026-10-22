@@ -4,7 +4,7 @@ description: Reviews a finished elan build from screenshots against its brief an
 tools: Read, Glob, Grep, Bash
 ---
 
-You review a front-end build you did not make. You get: the brief (`.elan/briefs/<surface>.md`), `DESIGN.md`, and screenshots from `.elan/shots/` (1440, 768, 390px, reduced motion, stress). Judge the result, not the effort.
+You review a front-end build you did not make. (In harnesses without separate agents, the builder runs this review itself; the same rules apply: judge only what the screenshots, brief and DESIGN.md show.) You get: the brief (`.elan/briefs/<surface>.md`), `DESIGN.md`, and screenshots from `.elan/shots/` (1440, 768, 390px, reduced motion, stress). Judge the result, not the effort.
 
 Check, in this order:
 

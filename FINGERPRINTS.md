@@ -2,7 +2,7 @@
 
 The anti-sameness check for scroll pages (see [reference/scroll/scenes.md](reference/scroll/scenes.md#fingerprints)). A new page must differ from **every** logged page on at least 4 of the 6 dimensions below.
 
-The log itself is personal and never lives in this repo: it is `~/.claude/elan/fingerprints.md` (create it with the header below if missing). Keeping it outside the skill means the skill can be shared or published without carrying anyone's project history, and one person's log still spans all their projects.
+The log itself is personal and never lives in this repo: it is `~/.elan/fingerprints.md` in the user's home folder (create it with the header below if missing). Keeping it outside the skill means the skill can be shared or published without carrying anyone's project history, and one person's log still spans all their projects.
 
 Rules:
 - Append a row only after the user says the page has landed (merged or shipped). An unmerged branch or a discarded experiment is never logged.

@@ -1,17 +1,31 @@
 # elan
 
-A personal all-in-one front-end skill for Claude Code: art direction, motion, scroll scenes and brand, with every visual change prototyped before it lands. It carries one design world from the landing page into the product.
+A personal all-in-one front-end skill for coding agents (Claude Code, Antigravity, Codex, Gemini CLI and others): art direction, motion, scroll scenes and brand, with every visual change prototyped before it lands. It carries one design world from the landing page into the product.
 
 ## Install
 
+Once, in any harness: run `npm install` in this folder. It installs the screenshot checker's browser driver, which drives your installed Chrome.
+
+elan is plain Markdown plus one Node script. In its files, `<elan>` means this folder, and the "rules file" is whichever project instructions file your harness reads (see *Harness notes* in [SKILL.md](SKILL.md)).
+
+**Claude Code**
 1. Link this folder as a skill (Windows junction shown; a symlink works elsewhere):
    ```
    mklink /J "%USERPROFILE%\.claude\skills\elan" "C:\Users\Denzel\Desktop\Vibe code\elan"
    ```
-2. Install the screenshot checker's browser driver, once, in this folder: `npm install`. It drives your installed Chrome.
-3. Enable the reviewer agent: copy `agents/elan-reviewer.md` to `~/.claude/agents/`.
+2. Copy `agents/elan-reviewer.md` to `~/.claude/agents/` so reviews run as a separate agent.
+3. Start a new session; `/elan` is now available in every project.
 
-Edits to this folder take effect in the next Claude Code session.
+**Harnesses that load skill folders** (a `SKILL.md` with front matter): link or copy this folder into that harness's skills folder, per its docs. If it can start separate agents, give it `agents/elan-reviewer.md`; if not, elan runs the review itself.
+
+**Any other harness:** point the project's rules file (`AGENTS.md`, `GEMINI.md`, or the harness's own) at elan:
+
+```
+For all UI, design and motion work, read and follow <absolute path to this folder>/SKILL.md.
+DESIGN.md is the source of truth.
+```
+
+Edits to this folder take effect in the next session.
 
 ## Quick start
 
@@ -21,7 +35,7 @@ In a project, ask for UI work and name elan:
 /elan build Redesign the landing page and the settings screen. Make it feel immersive.
 ```
 
-Or run `/elan` alone and it suggests the 2–3 commands that fit the project.
+Without slash commands, say it in words: "Use elan to build …". Or ask elan alone ("use elan") and it suggests the 2–3 commands that fit the project.
 
 ## What a run looks like
 
@@ -32,9 +46,9 @@ A first `build` in a project without a `DESIGN.md` goes like this. elan stops at
    - Mark each option **Keep**, **More like this** or **Kill**, add notes, press **Copy decision** and paste the result into chat. Plain words work too ("B's colours with D's type").
    - Two keeps or a mix leads to another round. It iterates until one direction is locked.
 3. **DESIGN.md.** The locked direction becomes `DESIGN.md` at the project root: tokens, type, motion personality and the signature interaction. From then on it is the source of truth.
-4. **CLAUDE.md opt-in (you decide).** elan offers to add a line so the project always uses it. Say yes or no.
+4. **Rules-file opt-in (you decide).** elan offers to add a line to the project's rules file (`CLAUDE.md`, `AGENTS.md`…) so the project always uses it. Say yes or no.
 5. **Build.** Section by section against the brief, with imagery drawn in code and real copy. Site pages get scroll scenes, section reveals and Lenis smooth scrolling. Every control gets hover, press and focus motion (the *interaction floor* in `commands/motion.md`).
-6. **Checks.** `shoot.mjs` screenshots at 1440, 768 and 390px and with reduced motion, with and without stress text. The build must pass. The `elan-reviewer` agent judges the screenshots with fresh eyes (at most two fix rounds).
+6. **Checks.** `shoot.mjs` screenshots at 1440, 768 and 390px and with reduced motion, with and without stress text. The build must pass. A reviewer (a separate agent where the harness allows, otherwise elan in a fresh pass) judges the screenshots (at most two fix rounds).
 7. **Demo (you decide).** elan gives you a "hover this, drag that" list against the running app, or a demo page. It isn't done until you've tried it.
 8. **Cleanup and report.** Scratch files are deleted, and the report covers what changed, the direction, what was cleaned up and what didn't pass.
 
@@ -57,7 +71,7 @@ Visual changes always go through a prototype first: a decision page for new work
 
 ## What elan leaves in your project
 
-- **Kept:** `DESIGN.md`, the source changes, and the `CLAUDE.md` line if you opted in:
+- **Kept:** `DESIGN.md`, the source changes, and the rules-file line if you opted in:
   > All UI, design, and motion work in this project uses the elan skill; DESIGN.md is its source of truth.
 - **Scratch:** briefs, decision pages, screenshots and test fixtures live in `.elan/`, which elan adds to `.gitignore`. Anything it had to put elsewhere (a seed page in `public/`, say) is listed in `.elan/cleanup.md`. All of it is deleted at the end unless you ask to keep something.
 - **Nothing is committed.** You review and commit.
@@ -65,9 +79,9 @@ Visual changes always go through a prototype first: a decision page for new work
 ## Tips
 
 - **Apps that call paid or rate-limited APIs:** say so in the request. elan tests with a seeded fixture plus a few real calls rather than looping on your keys.
-- **Run the checker yourself:** `node ~/.claude/skills/elan/scripts/shoot.mjs http://localhost:3000/ --stress` (screenshots go to `.elan/shots`). It catches text overflow and horizontal scroll, but not panes squeezed inside clipped containers, which is what the reviewer is for.
+- **Run the checker yourself:** `node <elan>/scripts/shoot.mjs http://localhost:3000/ --stress` (screenshots go to `.elan/shots`). It catches text overflow and horizontal scroll, but not panes squeezed inside clipped containers, which is what the reviewer is for.
 - **Don't run `next build` while `next dev` is running** in the same project; dev may keep serving stale CSS until restarted.
-- **Fingerprints:** after a scroll page is merged, elan offers to log it in your personal `~/.claude/elan/fingerprints.md` so the next page doesn't repeat it. The log never lives in this repo (format and rules in [FINGERPRINTS.md](FINGERPRINTS.md)).
+- **Fingerprints:** after a scroll page is merged, elan offers to log it in your personal `~/.elan/fingerprints.md` so the next page doesn't repeat it. The log never lives in this repo (format and rules in [FINGERPRINTS.md](FINGERPRINTS.md)).
 
 ## Layout
 
@@ -77,5 +91,5 @@ commands/       one file per command
 reference/      loaded on demand: site and app modes, craft floor, motion, scroll, components, directions
 templates/      decision page, in-app picker, DESIGN.md, brief
 scripts/        shoot.mjs screenshot + overflow check
-agents/         elan-reviewer
+agents/         elan-reviewer brief (a subagent in Claude Code; an inline review elsewhere)
 ```

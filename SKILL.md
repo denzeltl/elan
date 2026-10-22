@@ -1,11 +1,21 @@
 ---
 name: elan
-description: "Front-end design, motion and scroll system. Use when the user names elan (/elan, \"use elan\"), or when the project's CLAUDE.md says its UI work uses elan. Commands: build, explore, improve, motion, scroll, audit, polish, brand."
+description: "Front-end design, motion and scroll system. Use when the user names elan (/elan, \"use elan\"), or when the project's agent rules file (CLAUDE.md, AGENTS.md, GEMINI.md…) says its UI work uses elan. Commands: build, explore, improve, motion, scroll, audit, polish, brand."
 ---
 
 # elan
 
 One design system for sites and apps: a committed art direction, motion with a signature, and scroll scenes, carried from the landing page into the product. Every visual change is seen as a **prototype** before it touches the codebase.
+
+## Harness notes
+
+elan is plain Markdown plus a Node script, so it runs in any agent harness that can read files and run commands (Claude Code, Antigravity, Codex, Gemini CLI, Cursor…). Wherever these files say:
+
+- **`<elan>`**: the folder that contains this `SKILL.md`. Resolve it once at the start of the run and use the absolute path.
+- **rules file**: the project instructions file this harness reads: `CLAUDE.md` in Claude Code, `GEMINI.md` in Gemini CLI, `AGENTS.md` for most others. If unsure, use `AGENTS.md` and say so.
+- **reviewer**: if the harness can start a separate agent with its own instructions, start one with [agents/elan-reviewer.md](agents/elan-reviewer.md) as its brief (in Claude Code it is the `elan-reviewer` agent). Otherwise run the review yourself: re-read that file, look only at the screenshots, brief and DESIGN.md, and judge the result as if someone else built it.
+- **ask the user / stop**: write the question in chat and end the turn. Never answer a gate on the user's behalf.
+- **personal log**: `~/.elan/` in the user's home folder (create it if missing). Never inside `<elan>` or the project.
 
 ## Start of every run
 
@@ -51,12 +61,12 @@ Untreated, every design converges on the same motion: a sliding `layoutId` highl
 
 A command is done when its file's completion criteria hold and, for any UI change:
 
-- `node ~/.claude/skills/elan/scripts/shoot.mjs <url>` (add `--stress` for long strings) screenshots pass at 1440, 768 and 390px and with reduced motion: no text overflowing its container, no horizontal scroll at 390px, nothing hidden behind motion.
+- `node <elan>/scripts/shoot.mjs <url>` (add `--stress` for long strings) screenshots pass at 1440, 768 and 390px and with reduced motion: no text overflowing its container, no horizontal scroll at 390px, nothing hidden behind motion.
 - Every section answers "what is this section telling the user?" in its heading and first line.
 - Every control meets the interaction floor in [commands/motion.md](commands/motion.md#interaction-floor) (both modes, landing pages included), and the user has tried the motion demo.
 - Site mode, `immersive`: every non-scene section reveals on entry, and Lenis is on unless the user declined it.
 - The build passes.
 
-Then **clean up** before reporting: delete everything under `.elan/` and every path listed in `.elan/cleanup.md` (seed pages, fixtures in `public/`, prototype servers in launch configs), and stop any servers elan started. The only durable artifacts are `DESIGN.md`, the source changes, and the CLAUDE.md line if the user opted in. Keep a file only when the user asks for it.
+Then **clean up** before reporting: delete everything under `.elan/` and every path listed in `.elan/cleanup.md` (seed pages, fixtures in `public/`, prototype servers in launch configs), and stop any servers elan started. The only durable artifacts are `DESIGN.md`, the source changes, and the rules-file line if the user opted in. Keep a file only when the user asks for it.
 
 Report what changed, the direction it serves, what was cleaned up, and anything left undone.
