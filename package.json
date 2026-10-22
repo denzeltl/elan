@@ -1,0 +1,7 @@
+{
+  "name": "elan",
+  "private": true,
+  "type": "module",
+  "description": "Personal front-end skill for Claude Code",
+  "dependencies": { "playwright-core": "^1.56.0" }
+}

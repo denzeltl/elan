@@ -1,0 +1,9 @@
+{
+  "_note": "TODO(port): curate from instalanding.ai (MIT; /prompts.json, /systems.json, /motion.json) plus the user's favourites. Each entry needs enough to render a hero; full details fetched from source on demand.",
+  "directions": [
+    { "id": "pulp-magazine", "name": "Pulp magazine", "display": "Bowlby One", "body": "Libre Franklin", "palette": ["#f2c230", "#c8231b", "#16120e", "#f6efe0"], "imagery": "flat illustration, halftone", "motion": "stamps and slaps, quick and physical", "signature": "evidence stamped onto the page", "source": "elan bake-off (impeccable run)" },
+    { "id": "dark-cinema", "name": "Dark cinema", "display": "Instrument Serif", "body": "Inter", "palette": ["#0d0c0b", "#efe6d2", "#c8352b"], "imagery": "film grain, spotlight gradients", "motion": "slow fades and drifts", "signature": "a headline that resolves out of darkness", "source": "elan bake-off (baseline run)" },
+    { "id": "risograph", "name": "Risograph print", "display": "Archivo Black", "body": "IBM Plex Sans", "palette": ["#ebe8e1", "#0c1016", "#ff5b1a"], "imagery": "halftone, misregistered overprint", "motion": "ink bleeds and registration shifts", "signature": "layers slide into registration", "source": "instalanding.ai" },
+    { "id": "instrument-panel", "name": "Instrument panel", "display": "Inter Tight", "body": "Inter", "mono": "JetBrains Mono", "palette": ["#0b0d0e", "#d7dbd8", "#9cff57"], "imagery": "dot-matrix, gauges, generated charts", "motion": "ticks, counts, precise easing", "signature": "a live readout the visitor can tune", "source": "instalanding.ai" }
+  ]
+}

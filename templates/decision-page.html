@@ -1,0 +1,161 @@
+<!doctype html>
+<!--
+  elan decision page.
+  To use: copy this file to .elan/explore/<target>/index.html and replace the JSON in
+  #elan-options. Each option's `html` is a complete, self-contained document (inline CSS/SVG/JS,
+  DESIGN.md tokens). It renders inside its own iframe, so options can't leak styles into each other.
+  The user marks each option and presses "Copy decision"; they paste the result back in chat.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>elan · decide</title>
+<style>
+  :root {
+    --bg: #f4f2ee; --panel: #ffffff; --ink: #16151a; --muted: #6b6870; --line: #e2dfd8;
+    --keep: #1f7a4d; --kill: #b3261e; --more: #8a5a00; --accent: #16151a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111014; --panel: #1b1a1f; --ink: #f1efe9; --muted: #9a97a0; --line: #2c2a31;
+      --keep: #5fd39a; --kill: #ff8a80; --more: #f2c14e; --accent: #f1efe9; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { position: sticky; top: 0; z-index: 10; display: flex; gap: 16px; align-items: center;
+    justify-content: space-between; padding: 14px 24px; background: var(--bg);
+    border-bottom: 1px solid var(--line); }
+  header h1 { margin: 0; font-size: 16px; font-weight: 650; }
+  header .meta { color: var(--muted); font-size: 13px; }
+  main { max-width: 1440px; margin: 0 auto; padding: 24px; display: grid; gap: 28px; }
+  .opt { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    transition: opacity .2s ease, border-color .2s ease; }
+  .opt[data-mark="kill"] { opacity: .45; }
+  .opt[data-mark="keep"] { border-color: var(--keep); }
+  .opt[data-mark="more"] { border-color: var(--more); }
+  .opt-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between;
+    padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .opt-head h2 { margin: 0; font-size: 15px; }
+  .opt-head p { margin: 0; color: var(--muted); flex: 1 1 320px; }
+  .frame { position: relative; background: #fff; }
+  .frame iframe { display: block; width: 100%; height: 640px; border: 0; }
+  .opt.full .frame iframe { height: 92vh; }
+  .opt-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px 18px;
+    border-top: 1px solid var(--line); }
+  button { font: inherit; cursor: pointer; border-radius: 999px; padding: 7px 14px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink);
+    transition: transform .12s ease, background-color .15s ease, border-color .15s ease; }
+  button:active { transform: scale(.97); }
+  button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .mark[aria-pressed="true"][data-v="keep"] { background: var(--keep); border-color: var(--keep); color: #fff; }
+  .mark[aria-pressed="true"][data-v="kill"] { background: var(--kill); border-color: var(--kill); color: #fff; }
+  .mark[aria-pressed="true"][data-v="more"] { background: var(--more); border-color: var(--more); color: #fff; }
+  .spacer { flex: 1; }
+  textarea { width: 100%; min-height: 44px; resize: vertical; font: inherit; color: var(--ink);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .opt-foot textarea { flex: 1 1 100%; }
+  .summary { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .summary h2 { margin: 0 0 8px; font-size: 15px; }
+  .primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 12px); opacity: 0;
+    background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 999px;
+    transition: opacity .2s ease, transform .2s ease; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  @media (max-width: 640px) { main { padding: 16px; } header { padding: 12px 16px; } .frame iframe { height: 520px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<script id="elan-options" type="application/json">
+{
+  "title": "Example: landing hero",
+  "round": 1,
+  "question": "Which direction should the landing page take?",
+  "options": [
+    { "id": "a", "name": "Editorial stack", "idea": "Huge serif headline, narrow column, ink on paper.",
+      "html": "<!doctype html><body style='margin:0;font-family:Georgia,serif;background:#efe9df;color:#141210;display:grid;place-items:center;height:100vh'><h1 style='font-size:9vw;margin:0'>Option A</h1></body>" },
+    { "id": "b", "name": "Category standard", "idea": "The familiar, safe layout for this kind of product.",
+      "html": "<!doctype html><body style='margin:0;font-family:system-ui;background:#fff;color:#111;display:grid;place-items:center;height:100vh'><h1 style='font-size:6vw;margin:0'>Option B</h1></body>" }
+  ]
+}
+</script>
+
+<header>
+  <div><h1 id="title"></h1><div class="meta" id="meta"></div></div>
+  <button class="primary" id="copy">Copy decision</button>
+</header>
+<main id="list"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const data = JSON.parse(document.getElementById('elan-options').textContent);
+  const key = 'elan-decision:' + data.title + ':' + data.round;
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(key) || '{}'); } catch {}
+  const save = () => { try { localStorage.setItem(key, JSON.stringify(state)); } catch {} };
+
+  document.getElementById('title').textContent = data.title;
+  document.getElementById('meta').textContent = 'Round ' + data.round + (data.question ? ' · ' + data.question : '');
+  document.title = 'elan · ' + data.title;
+
+  const list = document.getElementById('list');
+  const marks = [['keep', 'Keep'], ['more', 'More like this'], ['kill', 'Kill']];
+
+  data.options.forEach((o, i) => {
+    const s = state[o.id] || (state[o.id] = { mark: '', note: '' });
+    const el = document.createElement('section');
+    el.className = 'opt'; el.dataset.mark = s.mark;
+    el.innerHTML = `
+      <div class="opt-head"><h2>${String.fromCharCode(65 + i)} · ${o.name}</h2><p>${o.idea || ''}</p>
+        <button class="expand" aria-pressed="false">Expand</button></div>
+      <div class="frame"><iframe title="${o.name}" loading="lazy" sandbox="allow-scripts"></iframe></div>
+      <div class="opt-foot">
+        ${marks.map(([v, l]) => `<button class="mark" data-v="${v}" aria-pressed="${s.mark === v}">${l}</button>`).join('')}
+        <span class="spacer"></span>
+        <textarea placeholder="What works, what doesn't…" aria-label="Notes on ${o.name}"></textarea>
+      </div>`;
+    el.querySelector('iframe').srcdoc = o.html;
+    const ta = el.querySelector('textarea'); ta.value = s.note;
+    ta.addEventListener('input', () => { s.note = ta.value; save(); });
+    el.querySelectorAll('.mark').forEach(b => b.addEventListener('click', () => {
+      s.mark = s.mark === b.dataset.v ? '' : b.dataset.v;
+      el.dataset.mark = s.mark;
+      el.querySelectorAll('.mark').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.v === s.mark)));
+      save();
+    }));
+    const ex = el.querySelector('.expand');
+    ex.addEventListener('click', () => {
+      const on = el.classList.toggle('full'); ex.setAttribute('aria-pressed', String(on));
+      ex.textContent = on ? 'Collapse' : 'Expand';
+    });
+    list.appendChild(el);
+  });
+
+  const summary = document.createElement('section');
+  summary.className = 'summary';
+  summary.innerHTML = '<h2>Overall notes</h2><textarea id="overall" placeholder="Mix A\'s type with C\'s colour, push further…" aria-label="Overall notes"></textarea>';
+  list.appendChild(summary);
+  const overall = summary.querySelector('textarea');
+  overall.value = state._overall || '';
+  overall.addEventListener('input', () => { state._overall = overall.value; save(); });
+
+  const toast = document.getElementById('toast');
+  document.getElementById('copy').addEventListener('click', async () => {
+    const label = { keep: 'KEEP', more: 'MORE LIKE THIS', kill: 'KILL', '': 'no mark' };
+    const lines = [`elan decision · ${data.title} · round ${data.round}`];
+    data.options.forEach((o, i) => {
+      const s = state[o.id];
+      lines.push(`${String.fromCharCode(65 + i)} (${o.id}) ${o.name}: ${label[s.mark]}${s.note ? ' | ' + s.note : ''}`);
+    });
+    if (state._overall) lines.push('Overall: ' + state._overall);
+    const text = lines.join('\n');
+    try { await navigator.clipboard.writeText(text); toast.textContent = 'Copied. Paste it in chat.'; }
+    catch { prompt('Copy this and paste it in chat:', text); toast.textContent = ''; }
+    toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800);
+  });
+})();
+</script>
+</body>
+</html>
